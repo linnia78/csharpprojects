@@ -1,0 +1,3 @@
+﻿# Schema Types https://graphql-dotnet.github.io/docs/getting-started/schema-types
+Properties are camel cased
+eg. AnimalType property is animalType in ql

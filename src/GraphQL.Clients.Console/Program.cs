@@ -8,20 +8,23 @@ namespace GraphQL.Clients.Console
 {
     class Program
     {
-        private static Schema _schema;
         public static async Task Main(string[] args)
         {
-            _schema = new Schema { Query = new AnimalQuery() };
-            
             await RouteAsync();
         }
 
         private static Dictionary<string, (string description, string query, Func<string, Task> operation)>
             Operations => new Dictionary<string, (string description, string query, Func<string, Task> operation)>
             {
-                { "a", ("single query (shorthand syntax) - only for single query", "{ animal { id name } }", RunAsync) },
-                { "b", ("single query (regular syntax)", "query { animal { id name } }", RunAsync) },
-                { "c", ("single query (add operation name) - optional if there is only a single operation", "query CustomOperation { animal { id name } }", RunAsync) },
+                { "a", ("single query (shorthand syntax) - only for single query", "{ animal { id name } }", RunAnimalQueryAsync) },
+                { "b", ("single query (regular syntax)", "query { animal { id name } }", RunAnimalQueryAsync) },
+                { "c", ("single query (add operation name) - optional if there is only a single operation", "query CustomOperation { animal { id name } }", RunAnimalQueryAsync) },
+                { "d", ("single query (add operation name in execution option) - same as \"d\"", "query CustomOperationNameAsExecutionOption { animal { id name } }", RunAnimalQueryWithCustomOperationExecutionOptionAsync) },
+                { "e", ("single query (enumeration) - an explict graph ql type has to be defined for enum", "{ animal { name animalType }}", RunAnimalQueryAsync) },
+                { "f", ("arguments (filter by id) - one result", "{ animal(id: 1) { id name } }", RunAnimalQueryWithArgumentAsync) },
+                { "g", ("arguments (filter by id) - no result", "{ animal(id: -1) { id name } }", RunAnimalQueryWithArgumentAsync) },
+                { "h", ("query alias (alias result) - two queries", "{ dogAlias : animal(id : 1) { id name }, humanAlias : animal(id : 2) { id name } }", RunAnimalQueryWithArgumentAsync) },
+                { "i", ("fragments (alias and fragments) - reuse query fields by defining fragments", "query { dogAlias : animal(id : 1) { ...fragmentFields }, humanAlias : animal(id : 2) { ...fragmentFields } } fragment fragmentFields on AnimalType { id name }", RunAnimalQueryWithArgumentAsync) },
                 { "x", ("exit", null, (query) => {
                         System.Environment.Exit(0);
                         return Task.CompletedTask;
@@ -44,12 +47,43 @@ namespace GraphQL.Clients.Console
             {
                 await Operations[input].operation(Operations[input].query);
             }
+            else
+            {
+                System.Console.ForegroundColor = ConsoleColor.Red;
+                System.Console.WriteLine("Invalid input.");
+            }
             await RouteAsync();
         }
 
-        public static async Task RunAsync(string query)
+        public static async Task RunAnimalQueryAsync(string query)
         {
-            var json = await _schema.ExecuteAsync(_ =>
+            var schema = new Schema { Query = new AnimalQuery() };
+            var json = await schema.ExecuteAsync(_ =>
+            {
+                _.Query = query;
+            });
+            System.Console.ForegroundColor = ConsoleColor.Green;
+            System.Console.WriteLine($"query - {query}");
+            System.Console.WriteLine(json);
+        }
+
+        private static async Task RunAnimalQueryWithCustomOperationExecutionOptionAsync(string query)
+        {
+            var schema = new Schema { Query = new AnimalQuery() };
+            var json = await schema.ExecuteAsync(_ =>
+            {
+                _.OperationName = "CustomOperationNameAsExecutionOption";
+                _.Query = query;
+            });
+            System.Console.ForegroundColor = ConsoleColor.Green;
+            System.Console.WriteLine($"query - {query}");
+            System.Console.WriteLine(json);
+        }
+
+        private static async Task RunAnimalQueryWithArgumentAsync(string query)
+        {
+            var schema = new Schema { Query = new AnimalQueryWithArgument() };
+            var json = await schema.ExecuteAsync(_ =>
             {
                 _.Query = query;
             });
