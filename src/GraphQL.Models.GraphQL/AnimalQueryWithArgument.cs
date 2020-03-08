@@ -1,9 +1,7 @@
 ﻿using GraphQL.Models.Data;
 using GraphQL.Types;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace GraphQL.Models.GraphQL
 {
@@ -20,7 +18,7 @@ namespace GraphQL.Models.GraphQL
             Field<AnimalType>(
                 "animal",
                 arguments: new QueryArguments(
-                    new QueryArgument<IdGraphType> { Name = "id" }
+                    new QueryArgument<IntGraphType> { Name = "id" }
                 ),
                 resolve: context =>
                 {
