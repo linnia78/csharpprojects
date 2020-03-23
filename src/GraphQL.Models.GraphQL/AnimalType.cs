@@ -7,7 +7,7 @@ namespace GraphQL.Models.GraphQL
     {
         public AnimalType()
         {
-            Field(x => x.Id).Description("The id of the Animal.");
+            Field<IntGraphType>(nameof(Animal.Id)).Description = "The id of the Animal.";
             Field(x => x.Name).Description("The name of the Animal.");
             Field<AnimalTypeEnumType>(nameof(Animal.AnimalType)).Description = "The type of the Animal.";
         }
