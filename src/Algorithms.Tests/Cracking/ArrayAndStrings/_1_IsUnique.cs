@@ -80,7 +80,7 @@ namespace Algorithms.Tests.Cracking.ArrayAndStrings
             var chars = new HashSet<char>();
             foreach(var @char in str.ToCharArray())
             {
-                _iterations++
+                _iterations++;
                 if (chars.Contains(@char))
                 {
                     return true;
@@ -115,16 +115,16 @@ namespace Algorithms.Tests.Cracking.ArrayAndStrings
 
         private bool IsUniqueWithBitManipulation(string str)
         {
-            var bit = 0;
+            var binaryDataStructure = 0;
             foreach(char c in str)
             {
-                _iterations++
+                _iterations++;
                 var position = (int)Math.Pow(2, (int)c - (int)'a');
-                if ((bit & position) > 0)
+                if ((binaryDataStructure & position) > 0)
                 {
                     return true;
                 }
-                bit |= position;
+                binaryDataStructure |= position;
             }
             return false;
         }
