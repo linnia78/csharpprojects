@@ -32,13 +32,13 @@ namespace Algorithms.Tests
             Assert.Collection(aResults, x => aExpected.Any(z => z == x));
 
             Assert.Equal(2, abResults.Count());
-            Assert.Collection(abResults, x => abExpected.Any(z => z == x));
+            Assert.True(abResults.All(x => abExpected.Any(z => z == x)));
 
             Assert.Equal(6, abcResults.Count());
-            Assert.Collection(abcResults, x => abcExpected.Any(z => z == x));
+            Assert.True(abcResults.All(x => abcExpected.Any(z => z == x)));
 
             Assert.Equal(24, abcdResults.Count());
-            Assert.Collection(abcdResults, x => abcdExpected.Any(z => z == x));
+            Assert.True(abcdResults.All(x => abcdExpected.Any(z => z == x)));
         }
 
         private IEnumerable<string> GeneratePermutations(string str)
@@ -61,7 +61,7 @@ namespace Algorithms.Tests
                     str = Swap(str, left, i);
                     GeneratePermutationsHelper(str, left + 1, right, answers);
 
-                    // backtracking - rolling back to parent
+                    // backtracking
                     str = Swap(str, left, i);
                 }
             }
