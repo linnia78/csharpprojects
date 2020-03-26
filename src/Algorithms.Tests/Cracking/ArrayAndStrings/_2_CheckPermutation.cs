@@ -7,6 +7,14 @@ namespace Algorithms.Tests.Cracking.ArrayAndStrings
 {
     public class _2_CheckPermutation
     {
+        /// <summary>
+        /// Check Permutation: Given two strings, write a method to decide if one is a permutation of the other. 
+        /// </summary>
+        public _2_CheckPermutation()
+        {
+
+        }
+
         [Theory]
         [InlineData("abc", "abc")]
         [InlineData("aabb", "aabb")]
