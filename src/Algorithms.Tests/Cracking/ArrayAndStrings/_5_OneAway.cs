@@ -64,7 +64,7 @@ namespace Algorithms.Tests.Cracking.ArrayAndStrings
 
             while(i < shortStr.Length)
             {
-                if (longStr[i] != shortStr[i])
+                if (longStr[i] != shortStr[j])
                 {
                     if (hasDifference)
                     {
@@ -74,14 +74,16 @@ namespace Algorithms.Tests.Cracking.ArrayAndStrings
 
                     if (!isEqualStrLength)
                     {
-                        j++;
+                        i++;
+                        if (longStr[i] != shortStr[j])
+                        {
+                            return false;
+                        }
                     }
                 }
-                else
-                {
-                    i++;
-                    j++;
-                }
+
+                i++;
+                j++;
             }
 
             return true;
