@@ -8,8 +8,8 @@ namespace DesignPatterns.Tests.Structural
         /* 
             Pattern     :   Decorator
             References  :
-                            https://refactoring.guru/design-patterns/composite
-                            https://sourcemaking.com/design_patterns/composite
+                            https://refactoring.guru/design-patterns/decorator
+                            https://sourcemaking.com/design_patterns/decorator
             Real World  :   
                             combos at mcdonalds
                             ice cream

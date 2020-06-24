@@ -6,10 +6,10 @@ namespace DesignPatterns.Tests.Structural
     public class BridgeTests
     {
         /* 
-            Pattern     :   
+            Pattern     :   Bridge
             References  :
-                            https://refactoring.guru/design-patterns/
-                            https://sourcemaking.com/design_patterns/
+                            https://refactoring.guru/design-patterns/bridge
+                            https://sourcemaking.com/design_patterns/bridge
             Real World  :   
                             remote control - various devices have a remote control, abstraction is the remote control, implementation is the device
                             shape and color - color is an attribute of shape, rather than defining a ColorShape combination for all possiblity
