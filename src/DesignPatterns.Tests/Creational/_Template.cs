@@ -3,7 +3,7 @@ using Xunit;
 
 namespace DesignPatterns.Tests.Structural
 {
-    public class Tests
+    public class _Template
     {
         /* 
             Pattern     :   
