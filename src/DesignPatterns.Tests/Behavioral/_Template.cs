@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
 
-namespace DesignPatterns.Tests.Structural
+namespace DesignPatterns.Tests.Behavioral
 {
     public class _Template
     {
