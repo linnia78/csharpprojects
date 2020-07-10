@@ -39,13 +39,16 @@ namespace DesignPatterns.Tests.Structural
             var ten = new Operand(10);
             var five = new Operand(5);
             var addition = new Operator(OperatorType.Addition, ten, five);
-            var multiplication = new Operator(OperatorType.Multiplication, five, addition);
+            var six = new Operand(6);
+            var two = new Operand(2);
+            var subtraction = new Operator(OperatorType.Subtraction, six, two);
+            var multiplication = new Operator(OperatorType.Multiplication, subtraction, addition);
 
             // Act
             var result = multiplication.Operation();
 
             // Assert
-            Assert.Equal(75, result);
+            Assert.Equal(60, result);
         }
 
         public abstract class Component

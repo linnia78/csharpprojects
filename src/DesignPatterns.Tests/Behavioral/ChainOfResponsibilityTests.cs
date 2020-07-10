@@ -11,9 +11,7 @@ namespace DesignPatterns.Tests.Behavioral
                             https://refactoring.guru/design-patterns/chain-of-responsibility
                             https://sourcemaking.com/design_patterns/chain-of-responsibility
             Real World  :   
-                            
-            Relations   :   
-                            
+                            technical support where you are transferred between various operators
         */
 
         [Fact]
