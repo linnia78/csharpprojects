@@ -13,6 +13,8 @@ namespace DesignPatterns.Tests.Behavioral
                             https://sourcemaking.com/design_patterns/memento
             Real World  :   
                             Undo
+            Note :          You want to store a copy of some internal states but do not want to expose the internal states.
+                            You want to take a snapshot of an object.
         */
 
         [Fact]
