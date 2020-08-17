@@ -294,7 +294,7 @@ namespace Algorithms.Tests.Fundamentals
 
         
         [Fact]
-        public void should_find_node_using_depth_first_search_post_order_iteratively()
+        public void should_find_node_using_depth_first_search_post_order_iteratively1()
         {
             // Arrange
             var contains3ExpectedTraversal = new List<int> { 4, 5, 2, 6, 7, 3 };
@@ -302,9 +302,9 @@ namespace Algorithms.Tests.Fundamentals
 
             // Act
             var contains3Traversal = new List<int>();
-            var contains3 = DepthFirstSearchPostOrderIteratively(_tree, 3, contains3Traversal);
+            var contains3 = DepthFirstSearchPostOrderIteratively1(_tree, 3, contains3Traversal);
             var contains8Traversal = new List<int>();
-            var contains8 = DepthFirstSearchPostOrderIteratively(_tree, 8, contains8Traversal);
+            var contains8 = DepthFirstSearchPostOrderIteratively1(_tree, 8, contains8Traversal);
 
             // Assert
             Assert.True(contains3);
@@ -321,7 +321,10 @@ namespace Algorithms.Tests.Fundamentals
         }
 
         /// DFS Post Order Iterative : Left Right Parent
-        private bool DepthFirstSearchPostOrderIteratively<T>(TreeNode<T> node, T target, List<T> traversal)
+        // Two approaches : 
+        // 1 - two stacks where stack #2 stores PRL in reverse order
+        // 2 - add right to stack, if current.right in stack then add current to stack then right
+        private bool DepthFirstSearchPostOrderIteratively1<T>(TreeNode<T> node, T target, List<T> traversal)
         {
             var stack = new Stack<TreeNode<T>>();
             var stack2 = new Stack<TreeNode<T>>();
@@ -331,19 +334,93 @@ namespace Algorithms.Tests.Fundamentals
                 if (current != null)
                 {
                     stack.Push(current);
+                    stack2.Push(current);
+                    current = current.Right;
+                }
+                else
+                {
+                    current = stack.Pop();
+                    current = current.Left;
+                }
+            }
+
+            while(stack2.Any())
+            {
+                var current2 = stack2.Pop();
+                traversal.Add(current2.Value);
+                if (current2.Value.Equals(target))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        [Fact]
+        public void should_find_node_using_depth_first_search_post_order_iteratively2()
+        {
+            // Arrange
+            var contains3ExpectedTraversal = new List<int> { 4, 5, 2, 6, 7, 3 };
+            var contains8ExpectedTraversal = new List<int> { 4, 5, 2, 6, 7, 3, 1 };
+
+            // Act
+            var contains3Traversal = new List<int>();
+            var contains3 = DepthFirstSearchPostOrderIteratively2(_tree, 3, contains3Traversal);
+            var contains8Traversal = new List<int>();
+            var contains8 = DepthFirstSearchPostOrderIteratively2(_tree, 8, contains8Traversal);
+
+            // Assert
+            Assert.True(contains3);
+            for (int i = 0; i < contains3ExpectedTraversal.Count; i++)
+            {
+                Assert.Equal(contains3ExpectedTraversal[i], contains3Traversal[i]);
+            }
+
+            Assert.False(contains8);
+            for (int i = 0; i < contains8ExpectedTraversal.Count; i++)
+            {
+                Assert.Equal(contains8ExpectedTraversal[i], contains8Traversal[i]);
+            }
+        }
+
+        /// DFS Post Order Iterative : Left Right Parent
+        // Two approaches : 
+        // 1 - two stacks where stack #2 stores PRL in reverse order
+        // 2 - add right to stack, if current.right in stack then add current to stack then right
+        private bool DepthFirstSearchPostOrderIteratively2<T>(TreeNode<T> node, T target, List<T> traversal)
+        {
+            var stack = new Stack<TreeNode<T>>();
+            var current = node;
+            while(current != null || stack.Any())
+            {
+                if (current != null)
+                {
+                    if (current.Right != null)
+                    {
+                        stack.Push(current.Right);
+                    }
+                    stack.Push(current);
                     current = current.Left;
                 }
                 else
                 {
                     current = stack.Pop();
-
-                    traversal.Add(current.Value);
-                    if (current.Value.Equals(target))
+                    if (stack.Any() && current.Right == stack.Peek())
                     {
-                        return true;
+                        stack.Pop();
+                        stack.Push(current);
+                        current = current.Right;
                     }
-                    
-                    current = current.Right;
+                    else
+                    {
+                        traversal.Add(current.Value);
+                        if (current.Value.Equals(target))
+                        {
+                            return true;
+                        }
+                        current = null;
+                    }
                 }
             }
 
