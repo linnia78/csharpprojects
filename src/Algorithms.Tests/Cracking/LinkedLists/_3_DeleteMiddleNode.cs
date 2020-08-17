@@ -13,7 +13,9 @@ namespace Algorithms.Tests.Cracking.LinkedLists
         /// </summary>
         public _3_DeleteMiddleNode()
         {
-            
+            // Algorithm
+            // Since no access to previous node, set current node's value = next's value, and set current.next = next.next
+            // Doing so removes next from referenced but kept its value, copied to current
         }
 
         [Theory]
