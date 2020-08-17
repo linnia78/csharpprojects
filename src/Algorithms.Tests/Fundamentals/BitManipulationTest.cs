@@ -53,13 +53,27 @@ namespace Algorithms.Tests.Fundamentals
         [Fact]
         public void should_evaluate_for_power_of_2()
         {
-            //Arrange
+            // Arrange
             var isPowerOfTwo = (Func<int, bool>)((int z) => z != 0 && (z & z - 1) == 0);
 
-            //Assert
+            // Assert
             Assert.True(isPowerOfTwo(2));
             Assert.True(isPowerOfTwo(256));
             Assert.False(isPowerOfTwo(3));
+        }
+
+        [Fact]
+        public void should_use_variable_as_character_storage()
+        {
+            // Arrange
+            var a = 'a' - 97;
+            var bitRepresentationOfA = 1 << a;
+            var dataStructure = 0;
+
+            // Act
+            dataStructure |= bitRepresentationOfA;
+
+            Assert.Equal(1, dataStructure);
         }
     }
 }

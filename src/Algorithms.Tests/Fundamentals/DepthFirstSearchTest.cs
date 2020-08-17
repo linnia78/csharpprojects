@@ -19,6 +19,7 @@ namespace Algorithms.Tests.Fundamentals
             right.AddChild(7);
         }
 
+
         [Fact]
         public void should_find_node_using_depth_first_search_in_order()
         {
@@ -46,14 +47,7 @@ namespace Algorithms.Tests.Fundamentals
             }
         }
 
-        /// <summary>
-        /// Left Root Right
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="node"></param>
-        /// <param name="target"></param>
-        /// <param name="traversal"></param>
-        /// <returns></returns>
+        /// DFS In Order Recursive : Left Right Parent
         private bool DepthFirstSearchInOrder<T>(TreeNode<T> node, T target, List<T> traversal)
         {
             if (node.Children != null)
@@ -78,6 +72,60 @@ namespace Algorithms.Tests.Fundamentals
                 }
             }
 
+            return false;
+        }
+
+        
+        [Fact]
+        public void should_find_node_using_depth_first_search_in_order_iteratively()
+        {
+            // Arrange
+            var contains3ExpectedTraversal = new List<int> { 4, 2, 5, 1, 6, 3 };
+            var contains8ExpectedTraversal = new List<int> { 4, 2, 5, 1, 6, 3, 7 };
+
+            // Act
+            var contains3Traversal = new List<int>();
+            var contains3 = DepthFirstSearchInOrderIteratively(_tree, 3, contains3Traversal);
+            var contains8Traversal = new List<int>();
+            var contains8 = DepthFirstSearchInOrderIteratively(_tree, 8, contains8Traversal);
+
+            // Assert
+            Assert.True(contains3);
+            for (int i = 0; i < contains3ExpectedTraversal.Count; i++)
+            {
+                Assert.Equal(contains3ExpectedTraversal[i], contains3Traversal[i]);
+            }
+
+            Assert.False(contains8);
+            for (int i = 0; i < contains8ExpectedTraversal.Count; i++)
+            {
+                Assert.Equal(contains8ExpectedTraversal[i], contains8Traversal[i]);
+            }
+        }
+
+        /// DFS In Order Iterative : Left Parent Right
+        public bool DepthFirstSearchInOrderIteratively<T>(TreeNode<T> node, T target, List<T> traversal)
+        {
+            var stack = new Stack<TreeNode<T>>();
+            var current = node;
+            while (current != null || stack.Any())
+            {
+                if (current != null)
+                {
+                    stack.Push(current);
+                    current = current.Left;
+                }
+                else
+                {
+                    current = stack.Pop();
+                    traversal.Add(current.Value);
+                    if (current.Value.Equals(target))
+                    {
+                        return true;
+                    }
+                    current = current.Right;
+                }
+            }
             return false;
         }
 
@@ -108,10 +156,7 @@ namespace Algorithms.Tests.Fundamentals
             }
         }
 
-        /// <summary>
-        /// Root Left Right
-        /// </summary>
-        /// <returns></returns>
+        /// DFS Pre Order Recursive : Parent Left Right 
         private bool DepthFirstSearchPreOrder<T>(TreeNode<T> node, T target, List<T> traversal)
         {
             traversal.Add(node.Value);
@@ -136,6 +181,59 @@ namespace Algorithms.Tests.Fundamentals
                 }
             }
 
+            return false;
+        }
+
+        [Fact]
+        public void should_find_node_using_depth_first_search_pre_order_iteratively()
+        {
+            // Arrange
+            var contains3ExpectedTraversal = new List<int> { 1, 2, 4, 5, 3 };
+            var contains8ExpectedTraversal = new List<int> { 1, 2, 4, 5, 3, 6, 7 };
+
+            // Act
+            var contains3Traversal = new List<int>();
+            var contains3 = DepthFirstSearchPreOrderIteratively(_tree, 3, contains3Traversal);
+            var contains8Traversal = new List<int>();
+            var contains8 = DepthFirstSearchPreOrderIteratively(_tree, 8, contains8Traversal);
+
+            // Assert
+            Assert.True(contains3);
+            for (int i = 0; i < contains3ExpectedTraversal.Count; i++)
+            {
+                Assert.Equal(contains3ExpectedTraversal[i], contains3Traversal[i]);
+            }
+
+            Assert.False(contains8);
+            for (int i = 0; i < contains8ExpectedTraversal.Count; i++)
+            {
+                Assert.Equal(contains8ExpectedTraversal[i], contains8Traversal[i]);
+            }
+        }
+
+        /// DFS Pre Order Iterative : Parent Left Right 
+        public bool DepthFirstSearchPreOrderIteratively<T>(TreeNode<T> node, T target, List<T> traversal)
+        {
+            var stack = new Stack<TreeNode<T>>();
+            var current = node;
+            while (current != null || stack.Any())
+            {
+                if (current != null)
+                {
+                    traversal.Add(current.Value);
+                    if (current.Value.Equals(target))
+                    {
+                        return true;
+                    }
+                    stack.Push(current);
+                    current = current.Left;
+                }
+                else
+                {
+                    current = stack.Pop();
+                    current = current.Right;
+                }
+            }
             return false;
         }
 
@@ -166,10 +264,7 @@ namespace Algorithms.Tests.Fundamentals
             }
         }
 
-        /// <summary>
-        /// Left Right Root
-        /// </summary>
-        /// <returns></returns>
+        /// DFS Post Order Recursive : Left Right Parent
         private bool DepthFirstSearchPostOrder<T>(TreeNode<T> node, T target, List<T> traversal)
         {
             if (node.Children != null)
@@ -192,6 +287,64 @@ namespace Algorithms.Tests.Fundamentals
             if (node.Value.Equals(target))
             {
                 return true;
+            }
+
+            return false;
+        }
+
+        
+        [Fact]
+        public void should_find_node_using_depth_first_search_post_order_iteratively()
+        {
+            // Arrange
+            var contains3ExpectedTraversal = new List<int> { 4, 5, 2, 6, 7, 3 };
+            var contains8ExpectedTraversal = new List<int> { 4, 5, 2, 6, 7, 3, 1 };
+
+            // Act
+            var contains3Traversal = new List<int>();
+            var contains3 = DepthFirstSearchPostOrderIteratively(_tree, 3, contains3Traversal);
+            var contains8Traversal = new List<int>();
+            var contains8 = DepthFirstSearchPostOrderIteratively(_tree, 8, contains8Traversal);
+
+            // Assert
+            Assert.True(contains3);
+            for (int i = 0; i < contains3ExpectedTraversal.Count; i++)
+            {
+                Assert.Equal(contains3ExpectedTraversal[i], contains3Traversal[i]);
+            }
+
+            Assert.False(contains8);
+            for (int i = 0; i < contains8ExpectedTraversal.Count; i++)
+            {
+                Assert.Equal(contains8ExpectedTraversal[i], contains8Traversal[i]);
+            }
+        }
+
+        /// DFS Post Order Iterative : Left Right Parent
+        private bool DepthFirstSearchPostOrderIteratively<T>(TreeNode<T> node, T target, List<T> traversal)
+        {
+            var stack = new Stack<TreeNode<T>>();
+            var stack2 = new Stack<TreeNode<T>>();
+            var current = node;
+            while(current != null || stack.Any())
+            {
+                if (current != null)
+                {
+                    stack.Push(current);
+                    current = current.Left;
+                }
+                else
+                {
+                    current = stack.Pop();
+
+                    traversal.Add(current.Value);
+                    if (current.Value.Equals(target))
+                    {
+                        return true;
+                    }
+                    
+                    current = current.Right;
+                }
             }
 
             return false;
