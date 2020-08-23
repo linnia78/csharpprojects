@@ -40,7 +40,6 @@ namespace Algorithms.Tests.Cracking.LinkedLists
             // get size of both list
             // traverse longer list to node by x where x = difference in length
             // traverse both node until they match
-            var test = a == b;
 
             // Arrange
             var nodeA = Node<int>.Create(a);
