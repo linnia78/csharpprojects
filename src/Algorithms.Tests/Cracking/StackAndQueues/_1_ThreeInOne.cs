@@ -177,7 +177,7 @@ namespace Algorithms.Tests.Cracking.StackAndQueues
                     }
                     else
                     {
-                        Grow(stackNum, accumulatedSpaces);F
+                        Grow(stackNum, accumulatedSpaces);
                     }
                 }
                 Stacks[stackNum].Push(ArrayDataStructure, item);
