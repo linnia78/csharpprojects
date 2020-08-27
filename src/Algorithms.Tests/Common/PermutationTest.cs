@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Algorithms.Tests
+namespace Algorithms.Tests.Common
 {
-    public class PermutationTests
+    public class PermutationTest
     {
         [Fact]
         public void should_generate_permutations()

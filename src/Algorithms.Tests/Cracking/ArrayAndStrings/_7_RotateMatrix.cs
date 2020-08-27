@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Algorithms.Tests.Cracking.ArrayAndints
+namespace Algorithms.Tests.Cracking.ArrayAndStrings
 {
     public class _7_RotateMatrix
     {

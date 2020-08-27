@@ -45,7 +45,7 @@ namespace Algorithms.Tests.Cracking.LinkedLists
                 }
                 else
                 {
-                    head.Add(head.Value);
+                    hashSet.Add(head.Value);
                     head = head.Next;
                 }
             }

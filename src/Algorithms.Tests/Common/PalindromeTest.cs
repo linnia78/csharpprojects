@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Algorithms.Tests
+namespace Algorithms.Tests.Common
 {
     public class PalindromeTest
     {
