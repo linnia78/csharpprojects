@@ -33,5 +33,22 @@ namespace Algorithms.Tests.DataStructures.Node
             if (node == null) { return 0; }
             return 1 + Math.Max(GetMaxHeightHelper(node.Left), GetMaxHeightHelper(node.Right));
         }
+
+        public IEnumerable<T> InOrderTraversalRecursively() => InOrderTraversalRecursivelyHelper(this);
+        private IEnumerable<T> InOrderTraversalRecursivelyHelper(TreeNode<T> node)
+        {
+            if (node != null) 
+            {
+                foreach(var value in InOrderTraversalRecursivelyHelper(node.Left))
+                {
+                    yield return value;
+                }
+                yield return node.Value;
+                foreach(var value in InOrderTraversalRecursivelyHelper(node.Right))
+                {
+                    yield return value;
+                };
+            }
+        }
     }
 }

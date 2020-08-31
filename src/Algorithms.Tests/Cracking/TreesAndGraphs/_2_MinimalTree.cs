@@ -17,11 +17,11 @@ namespace Algorithms.Tests.Cracking.TreesAndGraphs
         }
 
         [Theory]
-        [InlineData(new int[] { 1 }, 1)]
-        [InlineData(new int[] { 1, 2, 3, 4 }, 3)]
-        [InlineData(new int[] { 1, 2, 3, 4, 5, 6, 7 }, 3)]
-        [InlineData(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 4)]
-        public void should_build_binary_search_tree_with_minimal_height(int[] sortedArray, int expectedHeight)
+        [InlineData(new int[] { 1 }, 1, new int[] { 1 })]
+        [InlineData(new int[] { 1, 2, 3, 4 }, 3, new int[]{ 1, 2, 3, 4 })]
+        [InlineData(new int[] { 1, 2, 3, 4, 5, 6, 7 }, 3, new int[] { 1, 2, 3, 4, 5, 6, 7 })]
+        [InlineData(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 4, new int[] { 1, 2, 3, 4, 5, 6, 7, 8 })]
+        public void should_build_binary_search_tree_with_minimal_height(int[] sortedArray, int expectedHeight, int[] expectedInOrderTraversal)
         {
             // Algorithm
             //  Since collection is already sorted we can perform divide and conquer
@@ -36,6 +36,10 @@ namespace Algorithms.Tests.Cracking.TreesAndGraphs
 
             // Assert
             Assert.Equal(expectedHeight, height);
+            foreach(var data in bst.InOrderTraversalRecursively().Zip(expectedInOrderTraversal))
+            {
+                Assert.Equal(data.Second, data.First);
+            }
         }
 
         private TreeNode<int> BuildBst(int[] sortedArray)
