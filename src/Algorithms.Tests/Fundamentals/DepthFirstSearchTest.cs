@@ -11,12 +11,14 @@ namespace Algorithms.Tests.Fundamentals
         public DepthFirstSearchTest()
         {
             _tree = new TreeNode<int>(1);
-            var left = _tree.AddChild(2);
-            left.AddChild(4);
-            left.AddChild(5);
-            var right = _tree.AddChild(3);
-            right.AddChild(6);
-            right.AddChild(7);
+            var left = new TreeNode<int>(2);
+            left.Left = new TreeNode<int>(4);;
+            left.Right = new TreeNode<int>(5);
+            var right = new TreeNode<int>(3);
+            right.Left = new TreeNode<int>(6);
+            right.Right = new TreeNode<int>(7);
+            _tree.Left = left;
+            _tree.Right = right;
         }
 
 
@@ -50,29 +52,15 @@ namespace Algorithms.Tests.Fundamentals
         /// DFS In Order Recursive : Left Right Parent
         private bool DepthFirstSearchInOrder<T>(TreeNode<T> node, T target, List<T> traversal)
         {
-            if (node.Children != null)
-            {
-                if (DepthFirstSearchInOrder(node.Children[0], target, traversal))
-                {
-                    return true;
-                }
-            }
-
-            traversal.Add(node.Value);
-            if (node.Value.Equals(target))
+            if (node == null) { return false; }
+            if (DepthFirstSearchInOrder(node.Left, target, traversal))
             {
                 return true;
             }
 
-            if (node.Children != null)
-            {
-                if (DepthFirstSearchInOrder(node.Children[1], target, traversal))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            traversal.Add(node.Value);
+            return node.Value.Equals(target)
+                || DepthFirstSearchInOrder(node.Right, target, traversal);
         }
 
         
@@ -159,29 +147,12 @@ namespace Algorithms.Tests.Fundamentals
         /// DFS Pre Order Recursive : Parent Left Right 
         private bool DepthFirstSearchPreOrder<T>(TreeNode<T> node, T target, List<T> traversal)
         {
+            if (node == null) { return false; }
             traversal.Add(node.Value);
-            if (node.Value.Equals(target))
-            {
-                return true;
-            }
-
-            if (node.Children != null)
-            {
-                if (DepthFirstSearchPreOrder(node.Children[0], target, traversal))
-                {
-                    return true;
-                }
-            }
-
-            if (node.Children != null)
-            {
-                if (DepthFirstSearchPreOrder(node.Children[1], target, traversal))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            
+            return node.Value.Equals(target)
+                || DepthFirstSearchPreOrder(node.Left, target, traversal)
+                || DepthFirstSearchPreOrder(node.Right, target, traversal);
         }
 
         [Fact]
@@ -267,29 +238,15 @@ namespace Algorithms.Tests.Fundamentals
         /// DFS Post Order Recursive : Left Right Parent
         private bool DepthFirstSearchPostOrder<T>(TreeNode<T> node, T target, List<T> traversal)
         {
-            if (node.Children != null)
-            {
-                if (DepthFirstSearchPostOrder(node.Children[0], target, traversal))
-                {
-                    return true;
-                }
-            }
-
-            if (node.Children != null)
-            {
-                if (DepthFirstSearchPostOrder(node.Children[1], target, traversal))
-                {
-                    return true;
-                }
-            }
-
-            traversal.Add(node.Value);
-            if (node.Value.Equals(target))
+            if (node == null) { return false; }
+            if (DepthFirstSearchPostOrder(node.Left, target, traversal)
+                || DepthFirstSearchPostOrder(node.Right, target, traversal))
             {
                 return true;
             }
 
-            return false;
+            traversal.Add(node.Value);
+            return node.Value.Equals(target);
         }
 
         

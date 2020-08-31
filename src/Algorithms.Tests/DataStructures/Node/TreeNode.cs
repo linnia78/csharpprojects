@@ -8,8 +8,8 @@ namespace Algorithms.Tests.DataStructures.Node
     {
         public T Value;
         public List<TreeNode<T>> Children;
-        public TreeNode<T> Left { get { return Children?[0]; } }
-        public TreeNode<T> Right { get { return Children?[1]; } }
+        public TreeNode<T> Left { get; set; }
+        public TreeNode<T> Right { get; set; }
         public TreeNode(T value)
         {
             this.Value = value;
