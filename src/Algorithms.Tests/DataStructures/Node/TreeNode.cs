@@ -26,5 +26,12 @@ namespace Algorithms.Tests.DataStructures.Node
             Children.Add(child);
             return child;
         }
+
+        public int GetMaxHeight() => GetMaxHeightHelper(this);
+        private int GetMaxHeightHelper(TreeNode<T> node)
+        {
+            if (node == null) { return 0; }
+            return 1 + Math.Max(GetMaxHeightHelper(node.Left), GetMaxHeightHelper(node.Right));
+        }
     }
 }

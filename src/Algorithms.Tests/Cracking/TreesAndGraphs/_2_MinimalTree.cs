@@ -16,33 +16,40 @@ namespace Algorithms.Tests.Cracking.TreesAndGraphs
         
         }
 
-        
-       
-        public void should_build_binary_search_tree_with_minimal_height()
+        [Theory]
+        [InlineData(new int[] { 1 }, 1)]
+        [InlineData(new int[] { 1, 2, 3, 4 }, 3)]
+        [InlineData(new int[] { 1, 2, 3, 4, 5, 6, 7 }, 3)]
+        [InlineData(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 4)]
+        public void should_build_binary_search_tree_with_minimal_height(int[] sortedArray, int expectedHeight)
         {
             // Algorithm
             //  Since collection is already sorted we can perform divide and conquer
             //  Repeated divide colleciton in half the set parent node as collection[mid]
             //  while recursively calculate left and right where left is position left - mid -1 and right is mid + 1 to right
+            
             // Arrange
-
+            var bst = BuildBst(sortedArray);
+            
             // Act
+            var height = bst.GetMaxHeight();
 
             // Assert
+            Assert.Equal(expectedHeight, height);
         }
 
-        private TreeNode<int> BuildBst(int[] array)
+        private TreeNode<int> BuildBst(int[] sortedArray)
         {
-            return BuildBst(array, 0, array.Length - 1);
+            return BuildBst(sortedArray, 0, sortedArray.Length - 1);
         }
 
-        private TreeNode<int> BuildBst(int[] array, int left, int right)
+        private TreeNode<int> BuildBst(int[] sortedArray, int left, int right)
         {
-            if (right > left) { return null; }
+            if (right < left) { return null; }
             var mid = (left + right) / 2;
-            var node = new TreeNode<int>(array[mid]);
-            node.Left = BuildBst(array, left, mid - 1);
-            node.Right = BuildBst(array, mid + 1, right);
+            var node = new TreeNode<int>(sortedArray[mid]);
+            node.Left = BuildBst(sortedArray, left, mid - 1);
+            node.Right = BuildBst(sortedArray, mid + 1, right);
             return node;
         }
     }
