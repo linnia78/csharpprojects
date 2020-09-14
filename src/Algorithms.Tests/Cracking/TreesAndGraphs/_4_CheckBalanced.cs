@@ -34,9 +34,11 @@ namespace Algorithms.Tests.Cracking.TreesAndGraphs
 
             // Act
             var result = IsBalanced(tree1);
+            var result2 = IsBalanced2(tree1);
             
             // Assert
             Assert.False(result != Int32.MinValue);
+            Assert.False(result2);
         }
 
         [Fact]
@@ -56,9 +58,11 @@ namespace Algorithms.Tests.Cracking.TreesAndGraphs
 
             // Act
             var result = IsBalanced(tree1);
+            var result2 = IsBalanced2(tree1);
             
             // Assert
             Assert.False(result != Int32.MinValue);
+            Assert.False(result2);
         }
 
         [Fact]
@@ -80,9 +84,11 @@ namespace Algorithms.Tests.Cracking.TreesAndGraphs
 
             // Act
             var result = IsBalanced(tree1);
+            var result2 = IsBalanced2(tree1);
             
             // Assert
             Assert.True(result != Int32.MinValue);
+            Assert.True(result2);
         }
 
         [Fact]
@@ -107,9 +113,11 @@ namespace Algorithms.Tests.Cracking.TreesAndGraphs
 
             // Act
             var result = IsBalanced(tree1);
+            var result2 = IsBalanced2(tree1);
             
             // Assert
             Assert.False(result != Int32.MinValue);
+            Assert.False(result2);
         }
 
         public int IsBalanced(TreeNode<int> node)
@@ -135,5 +143,22 @@ namespace Algorithms.Tests.Cracking.TreesAndGraphs
             }
         }
 
+        public bool IsBalanced2(TreeNode<int> node)
+        {
+            if (node == null) { return true; }
+            var leftHeight = GetHeight(node.Left);
+            var rightHeight = GetHeight(node.Right);
+            if (Math.Abs(leftHeight - rightHeight) > 1)
+            {
+                return false;
+            }
+            return IsBalanced2(node.Left) && IsBalanced2(node.Right);
+        }
+
+        private int GetHeight(TreeNode<int> node)
+        {
+            if (node == null) { return 0; }
+            return Math.Max(GetHeight(node.Left), GetHeight(node.Right)) + 1;
+        }
     }
 }
