@@ -36,6 +36,58 @@ namespace Algorithms.Tests.Common
             Assert.True(results.All(x => expectedResults.Any(y => y == x)));
         }
 
+        [Fact]
+        public void should_traverse_tree2()
+        {
+            // Arrange
+            var a = new GraphNode('A');
+            var b = new GraphNode('B');
+            var c = new GraphNode('C');
+            var d = new GraphNode('D');
+            var e = new GraphNode('E');
+            a.Verticies.Add(b);
+            a.Verticies.Add(c);
+            a.Verticies.Add(d);
+            b.Verticies.Add(e);
+            c.Verticies.Add(e);
+            d.Verticies.Add(e);
+            var expectedResults = new List<string>{ "ABE", "ACE", "ADE" };
+
+            // Act
+            var results = new List<string>();
+            DirectedGraphTraversal(a, new StringBuilder(), results, new Dictionary<char, Visit>());
+
+            // Assert
+            Assert.True(results.All(x => expectedResults.Any(y => y == x)));
+        }
+
+        [Fact]
+        public void should_traverse_tree3()
+        {
+            // Arrange
+            var a = new GraphNode('A');
+            var b = new GraphNode('B');
+            var c = new GraphNode('C');
+            var d = new GraphNode('D');
+            var e = new GraphNode('E');
+            var f = new GraphNode('F');
+            a.Verticies.Add(b);
+            b.Verticies.Add(c);
+            c.Verticies.Add(e);
+            e.Verticies.Add(f);
+            e.Verticies.Add(d);
+            d.Verticies.Add(e);
+            a.Verticies.Add(d);
+            var expectedResults = new List<string>{ "ABE", "ACE", "ADE" };
+
+            // Act
+            var results = new List<string>();
+            DirectedGraphTraversal(a, new StringBuilder(), results, new Dictionary<char, Visit>());
+
+            // Assert
+            Assert.True(results.All(x => expectedResults.Any(y => y == x)));
+        }
+
         private enum Visit
         {
             Visiting,
